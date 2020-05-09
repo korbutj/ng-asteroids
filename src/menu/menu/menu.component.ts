@@ -6,9 +6,7 @@ import { Component, OnInit } from '@angular/core';
     <p>
       menu works!
     </p>
-  `,
-  styles: [
-  ]
+  `
 })
 export class MenuComponent implements OnInit {
 

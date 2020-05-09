@@ -8,8 +8,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule, {
-  ngZone: "noop"
-}).catch(err => {
+platformBrowserDynamic().bootstrapModule(AppModule).catch(err => {
   console.error(err)
 });
