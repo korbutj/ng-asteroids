@@ -18,16 +18,7 @@ export class Movement {
   protected speed: number;
 
   // TODO: no optional parameters, responsibility for generating parameters should be outside
-  constructor(angleValue?: number, speedValue?: number) {
-    if (isNaN(angleValue)) {
-      // TODO: util
-      angleValue = Math.random() * 2 * Math.PI;
-    }
-
-    if (isNaN(speedValue)) {
-      speedValue = Math.random(); //TODO: * parameter - to be defined
-    }
-
+  constructor(angleValue: number, speedValue: number) {
     this.angle = angleValue;
     this.speed = speedValue;
 
@@ -51,12 +42,5 @@ export class Movement {
       x: this.currentPosition.x + this.speedVector.horizontalSpeed * deltaTime,
       y: this.currentPosition.y + this.speedVector.verticalSpeed * deltaTime
     };
-
-    this.handleEdgeCase();
-  }
-
-  //TODO logic for handling edge cases
-  private handleEdgeCase() {
-
   }
 }
