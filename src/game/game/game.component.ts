@@ -19,7 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
   shipPosition: Position = {x: 200, y: 300};
   shipAngle: number = 1;
 
-  private shipMovement: Movement = new Movement(0, 10, {x: 500, y: 500})
+  private shipMovement: Movement = new Movement(0, 0, {x: 500, y: 500})
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -50,6 +50,8 @@ export class GameComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
+        this.shipPosition = this.shipMovement.updatePosition(1);
+        this.detectorRef.detectChanges();
       });
 
     this.assignEvents();
@@ -72,7 +74,17 @@ export class GameComponent implements OnInit, OnDestroy {
     )
     .subscribe((value) => {
       this.shipInMove = value;
-      this.shipPosition = this.shipMovement.updatePosition(1);
+      this.shipMovement.updateSpeed(1);
+      this.detectorRef.detectChanges();
+    });
+
+    this.keyboardHandlerService.onDown()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((value) => {
+      this.shipInMove = false;
+      this.shipMovement.updateSpeed(-1);
       this.detectorRef.detectChanges();
     });
 
