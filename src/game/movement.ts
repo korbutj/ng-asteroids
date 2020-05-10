@@ -1,15 +1,8 @@
 export class Movement {
     //Angle at which the object moves (with respect to horizontal axis)
-    protected readonly angle: number;
-    public get Angle() : number {
-        return this.angle;
-    }
-    protected readonly currentPosition: Position;
-    public get CurrentPosition() : Position {
-        return this.currentPosition;
-    }
-    //Most likely per frame?
-    protected readonly speedVector: SpeedVectorComponents;
+    public readonly angle: number;
+    public readonly currentPosition: position;
+    protected readonly speedVector: speedVectorComponents;
 
     protected readonly speed: number;
 
@@ -23,33 +16,40 @@ export class Movement {
         this.angle = angleValue;
         this.speed = speedValue;
 
-        this.speedVector.HorizontalSpeed = (this.speed * Math.cos(this.angle));
-        this.speedVector.VerticalSpeed = (this.speed * Math.sin(this.angle));
+        this.establishSpeedComponents();
     }
 
+    private establishSpeedComponents() {
+        this.speedVector.horizontalSpeed = (this.speed * Math.cos(this.angle));
+        this.speedVector.verticalSpeed = (this.speed * Math.sin(this.angle));
+    }
 
     /**
      * Update
      */
-    public Update(deltaTime: number) {
-        this.UpdatePosition(deltaTime);
+    public update(deltaTime: number) {
+        this.updatePosition(deltaTime);
+    }
+
+    private updatePosition(deltaTime: number) {
+        this.currentPosition.x += this.speedVector.horizontalSpeed * deltaTime;
+        this.currentPosition.y += this.speedVector.verticalSpeed * deltaTime;
+        this.handleEdgeCase();
+    }
+
+    //TODO logic for handling edge cases
+    private handleEdgeCase()
+    {
         
     }
-
-    //TODO checking for edge case and teleporting to the other side
-    private UpdatePosition(deltaTime: number) {
-        this.currentPosition.X += this.speedVector.HorizontalSpeed * deltaTime;
-        this.currentPosition.Y += this.speedVector.VerticalSpeed * deltaTime;
-    }
-
 }
 
-export class SpeedVectorComponents{
-    public HorizontalSpeed: number;
-    public VerticalSpeed: number;
+export type speedVectorComponents = {
+    horizontalSpeed: number;
+    verticalSpeed: number;
 }
 
-export class Position{
-    public X: number;
-    public Y: number;
+export type position = {
+    x: number;
+    y: number;
 }
