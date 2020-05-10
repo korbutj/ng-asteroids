@@ -1,55 +1,62 @@
+export type SpeedVectorComponents = {
+  readonly horizontalSpeed: number;
+  readonly verticalSpeed: number;
+}
+
+export type Position = {
+  readonly x: number;
+  readonly y: number;
+}
+
 export class Movement {
-    //Angle at which the object moves (with respect to horizontal axis)
-    public readonly angle: number;
-    public readonly currentPosition: position;
-    protected readonly speedVector: speedVectorComponents;
 
-    protected readonly speed: number;
+  //Angle at which the object moves (with respect to horizontal axis)
+  angle: number;
+  currentPosition: Position;
 
-    constructor(angleValue?: number, speedValue?: number) {
-        if(angleValue === undefined)
-            angleValue = Math.random() * 2 * Math.PI;
+  protected speedVector: SpeedVectorComponents;
+  protected speed: number;
 
-        if(speedValue === undefined)
-            speedValue = Math.random(); //TODO: * parameter - to be defined
-
-        this.angle = angleValue;
-        this.speed = speedValue;
-
-        this.establishSpeedComponents();
+  // TODO: no optional parameters, responsibility for generating parameters should be outside
+  constructor(angleValue?: number, speedValue?: number) {
+    if (isNaN(angleValue)) {
+      // TODO: util
+      angleValue = Math.random() * 2 * Math.PI;
     }
 
-    private establishSpeedComponents() {
-        this.speedVector.horizontalSpeed = (this.speed * Math.cos(this.angle));
-        this.speedVector.verticalSpeed = (this.speed * Math.sin(this.angle));
+    if (isNaN(speedValue)) {
+      speedValue = Math.random(); //TODO: * parameter - to be defined
     }
 
-    /**
-     * Update
-     */
-    public update(deltaTime: number) {
-        this.updatePosition(deltaTime);
-    }
+    this.angle = angleValue;
+    this.speed = speedValue;
 
-    private updatePosition(deltaTime: number) {
-        this.currentPosition.x += this.speedVector.horizontalSpeed * deltaTime;
-        this.currentPosition.y += this.speedVector.verticalSpeed * deltaTime;
-        this.handleEdgeCase();
-    }
+    this.establishSpeedComponents();
+  }
 
-    //TODO logic for handling edge cases
-    private handleEdgeCase()
-    {
-        
-    }
-}
+  update(deltaTime: number) {
+    this.updatePosition(deltaTime);
+  }
 
-export type speedVectorComponents = {
-    horizontalSpeed: number;
-    verticalSpeed: number;
-}
+  private establishSpeedComponents() {
+    this.speedVector = {
+      horizontalSpeed: (this.speed * Math.cos(this.angle)),
+      verticalSpeed: (this.speed * Math.sin(this.angle))
+    };
+  }
 
-export type position = {
-    x: number;
-    y: number;
+  private updatePosition(deltaTime: number) {
+
+    this.currentPosition = {
+      x: this.currentPosition.x + this.speedVector.horizontalSpeed * deltaTime,
+      y: this.currentPosition.y + this.speedVector.verticalSpeed * deltaTime
+    };
+
+    this.handleEdgeCase();
+  }
+
+  //TODO logic for handling edge cases
+  private handleEdgeCase() {
+
+  }
 }
