@@ -34,27 +34,31 @@ export class KeyboardHandlerService {
    }
 
    private assignEvents() {
-    fromEvent(this.document, 'keydown')
-    .subscribe((event: KeyboardEvent) => {
-        switch (event.key.toLowerCase())
-        {
-          case 'arrowup':
-          case 'w':
-            this.up$.next();
-            break;
-          case 'arrowdown':
-          case 's':
-            this.down$.next();
-            break;
-          case 'arrowleft':
-          case 'a':
-            this.left$.next();
-            break;
-          case 'arrowright':
-          case 'd':
-            this.right$.next();
-            break;
-        }
-    });
+      fromEvent(this.document, 'keydown')
+      .subscribe((event: KeyboardEvent) => {
+          this.handleKey(event.key);
+      });
+   }
+
+   private handleKey(key: string): void {
+      switch (key.toLowerCase())
+      {
+        case 'arrowup':
+        case 'w':
+          this.up$.next();
+          break;
+        case 'arrowdown':
+        case 's':
+          this.down$.next();
+          break;
+        case 'arrowleft':
+        case 'a':
+          this.left$.next();
+          break;
+        case 'arrowright':
+        case 'd':
+          this.right$.next();
+          break;
+      }
    }
 }

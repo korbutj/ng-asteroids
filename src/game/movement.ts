@@ -25,18 +25,18 @@ export class Movement {
     this.establishSpeedComponents();
   }
 
-  update(deltaTime: number) {
+  update(deltaTime: number): void {
     this.updatePosition(deltaTime);
   }
 
-  private establishSpeedComponents() {
+  private establishSpeedComponents(): void {
     this.speedVector = {
       horizontalSpeed: (this.speed * Math.cos(this.angle)),
       verticalSpeed: (this.speed * Math.sin(this.angle))
     };
   }
 
-  private updatePosition(deltaTime: number) {
+  private updatePosition(deltaTime: number): void {
 
     this.currentPosition = {
       x: this.currentPosition.x + this.speedVector.horizontalSpeed * deltaTime,
