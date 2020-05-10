@@ -5,7 +5,7 @@ import {takeUntil, filter, take} from 'rxjs/operators';
 import { KeyboardHandlerService } from '../keyboard-handler.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Movement } from '../movement';
-import {Position} from "../movement";
+import {Position} from '../movement';
 
 @Component({
   selector: 'app-game',
@@ -19,7 +19,7 @@ export class GameComponent implements OnInit, OnDestroy {
   shipPosition: Position = {x: 200, y: 300};
   shipAngle: number = 1;
 
-  private shipMovement: Movement = new Movement(0, 0, {x: 500, y: 500})
+  private shipMovement: Movement = new Movement(0, 0, {x: 500, y: 500});
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -27,7 +27,7 @@ export class GameComponent implements OnInit, OnDestroy {
               private keyboardHandlerService: KeyboardHandlerService,
               private readonly router: Router,
               private readonly detectorRef: ChangeDetectorRef,
-              private readonly applicationRef: ApplicationRef) { 
+              private readonly applicationRef: ApplicationRef) {
       // This one is magic for working with router and noop zones
       router.events
       .pipe(
@@ -44,7 +44,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
+
     this.animationFrameService.onRefresh()
       .pipe(
         takeUntil(this.destroy$)
@@ -56,7 +56,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     this.assignEvents();
 
-    
+
   }
 
   ngOnDestroy(): void {
@@ -64,7 +64,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  
+
 
   private assignEvents()
   {

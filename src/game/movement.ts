@@ -14,8 +14,8 @@ export class Movement {
   angle: number;
   currentPosition: Position;
 
-  private readonly angleSpeed: number = Math.PI/50;
-  private readonly acceleration: number = 0.3;
+  private readonly angleSpeed: number = Math.PI / 50;
+  private readonly acceleration: number = 0.7;
   protected speedVector: SpeedVectorComponents;
   protected speed: number;
 
@@ -28,7 +28,7 @@ export class Movement {
   }
 
   updateAngle(isRight: boolean): number {
-    if(isRight){
+    if (isRight){
       this.angle += this.angleSpeed;
     }
     else{
@@ -39,14 +39,15 @@ export class Movement {
 
   updateSpeed(direction: number): void{
     this.speed += direction * this.acceleration;
-    if(this.speed < 0)
+    if (this.speed < 0) {
       this.speed = 0;
+    }
   }
 
   private establishSpeedComponents(): void {
     this.speedVector = {
-      horizontalSpeed: (this.speed * Math.cos(this.angle-Math.PI/2)),
-      verticalSpeed: (this.speed * Math.sin(this.angle-Math.PI/2))
+      horizontalSpeed: (this.speed * Math.cos(this.angle - Math.PI / 2)),
+      verticalSpeed: (this.speed * Math.sin(this.angle - Math.PI / 2))
     };
   }
 
