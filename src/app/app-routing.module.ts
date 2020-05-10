@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {MenuComponent} from "../menu/menu/menu.component";
-import {GameComponent} from "../game/game/game.component";
-import {MenuModule} from "../menu/menu.module";
-import {GameModule} from "../game/game.module";
+import {MenuComponent} from '../menu/menu/menu.component';
+import {GameComponent} from '../game/game/game.component';
+import {MenuModule} from '../menu/menu.module';
+import {GameModule} from '../game/game.module';
 
 const routes: Routes = [
   { path: 'menu', component: MenuComponent },
