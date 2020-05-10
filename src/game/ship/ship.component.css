@@ -1,0 +1,31 @@
+.ship-color {
+  fill: black;
+  stroke: white;
+}
+
+.flames {
+  opacity: 0;
+}
+
+.ship-in-move .flames {
+  opacity: 1;
+  animation: flames-animation .5s linear infinite forwards;
+}
+
+@keyframes flames-animation {
+  from {
+    stroke-dasharray: 1;
+  }
+  50% {
+    stroke-dasharray: 4;
+  }
+  to {
+    stroke-dasharray: 1;
+  }
+}
+
+:host {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+}
