@@ -7,12 +7,9 @@ import { KeyboardHandlerService } from '../keyboard-handler.service';
 @Component({
   selector: 'app-game',
   template: `
-    <p>
-      game works!
-    </p>
+    <app-ship></app-ship>
   `,
-  styles: [
-  ]
+  styles: []
 })
 export class GameComponent implements OnInit, OnDestroy {
 
