@@ -50,7 +50,7 @@ export class ColoredTitleComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnInit(): void {
-    interval(100)
+    interval(250)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.shiftColors();
