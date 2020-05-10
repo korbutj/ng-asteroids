@@ -14,33 +14,41 @@ export class Movement {
   angle: number;
   currentPosition: Position;
 
+  private readonly angleSpeed: number = Math.PI/50;
   protected speedVector: SpeedVectorComponents;
   protected speed: number;
 
   // TODO: no optional parameters, responsibility for generating parameters should be outside
-  constructor(angleValue: number, speedValue: number) {
+  constructor(angleValue: number, speedValue: number, startingPosition: Position) {
     this.angle = angleValue;
     this.speed = speedValue;
-
+    this.currentPosition = startingPosition;
     this.establishSpeedComponents();
   }
 
-  update(deltaTime: number): void {
-    this.updatePosition(deltaTime);
+  updateAngle(isRight: boolean): number {
+    if(isRight){
+      this.angle += this.angleSpeed;
+    }
+    else{
+      this.angle -= this.angleSpeed;
+    }
+    return this.angle;
   }
 
   private establishSpeedComponents(): void {
     this.speedVector = {
-      horizontalSpeed: (this.speed * Math.cos(this.angle)),
-      verticalSpeed: (this.speed * Math.sin(this.angle))
+      horizontalSpeed: (this.speed * Math.cos(this.angle-Math.PI/2)),
+      verticalSpeed: (this.speed * Math.sin(this.angle-Math.PI/2))
     };
   }
 
-  private updatePosition(deltaTime: number): void {
-
+  updatePosition(deltaTime: number): Position {
+    this.establishSpeedComponents();
     this.currentPosition = {
       x: this.currentPosition.x + this.speedVector.horizontalSpeed * deltaTime,
       y: this.currentPosition.y + this.speedVector.verticalSpeed * deltaTime
     };
+    return this.currentPosition;
   }
 }
