@@ -1,7 +1,7 @@
 import {ApplicationRef, ChangeDetectorRef, Component} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
-import {GITHUB_URL} from "../../consts";
-import {filter, take} from "rxjs/operators";
+import {NavigationEnd, Router} from '@angular/router';
+import {GITHUB_URL} from '../../consts';
+import {filter, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu',
@@ -31,7 +31,7 @@ export class MenuComponent {
       .subscribe(() => {
         detectorRef.markForCheck();
         applicationRef.tick();
-      })
+      });
 
   }
 
@@ -44,7 +44,7 @@ export class MenuComponent {
   }
 
   github(): void {
-    window.open(GITHUB_URL, '_blank')
+    window.open(GITHUB_URL, '_blank');
   }
 
 }
