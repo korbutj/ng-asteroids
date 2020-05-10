@@ -41,7 +41,7 @@ export class KeyboardHandlerService {
       fromEvent(this.document, 'keyup')
       .subscribe((event: KeyboardEvent) => {
           this.handleKey(event.key, false);
-      })
+      });
    }
 
    private handleKey(key: string, value: boolean): void {

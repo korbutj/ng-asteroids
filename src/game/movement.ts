@@ -1,16 +1,16 @@
 export type SpeedVectorComponents = {
   readonly horizontalSpeed: number;
   readonly verticalSpeed: number;
-}
+};
 
 export type Position = {
   readonly x: number;
   readonly y: number;
-}
+};
 
 export class Movement {
 
-  //Angle at which the object moves (with respect to horizontal axis)
+  // Angle at which the object moves (with respect to horizontal axis)
   angle: number;
   currentPosition: Position;
 

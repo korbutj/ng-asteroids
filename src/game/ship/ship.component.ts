@@ -1,5 +1,5 @@
 import {Component, Input, HostBinding, OnChanges, SimpleChanges, Host} from '@angular/core';
-import {Position} from "../movement";
+import {Position} from '../movement';
 
 @Component({
   selector: 'app-ship',
@@ -8,7 +8,7 @@ import {Position} from "../movement";
 })
 export class ShipComponent implements OnChanges {
 
-  
+
 
   @Input()
   shipInMove: boolean = false;
@@ -21,7 +21,7 @@ export class ShipComponent implements OnChanges {
 
   @HostBinding('style.left.px')
   x: number;
-  
+
   @HostBinding('style.top.px')
   y: number;
 
@@ -29,14 +29,14 @@ export class ShipComponent implements OnChanges {
   transform: string;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes.position)
+    if (changes.position)
     {
       this.x = this.position.x;
       this.y = this.position.y;
     }
-    if(changes.angle)
+    if (changes.angle)
     {
-      this.transform = `rotate(${this.angle}rad)`
+      this.transform = `rotate(${this.angle}rad)`;
     }
   }
 }
