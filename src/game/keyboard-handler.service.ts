@@ -8,56 +8,60 @@ import { tap } from 'rxjs/operators';
 })
 export class KeyboardHandlerService {
 
-  private readonly up$: Subject<void> = new Subject<void>();
-  private readonly down$: Subject<void> = new Subject<void>();
-  private readonly left$: Subject<void> = new Subject<void>();
-  private readonly right$: Subject<void> = new Subject<void>();
+  private readonly up$: Subject<boolean> = new Subject<boolean>();
+  private readonly down$: Subject<boolean> = new Subject<boolean>();
+  private readonly left$: Subject<boolean> = new Subject<boolean>();
+  private readonly right$: Subject<boolean> = new Subject<boolean>();
 
   constructor(@Inject(DOCUMENT) private readonly document: Document) {
       this.assignEvents();
    }
 
-   onUp(): Observable<void> {
+   onUp(): Observable<boolean> {
       return this.up$.asObservable();
    }
 
-   onDown(): Observable<void> {
+   onDown(): Observable<boolean> {
       return this.down$.asObservable();
    }
 
-   onLeft(): Observable<void> {
+   onLeft(): Observable<boolean> {
       return this.left$.asObservable();
    }
 
-   onRight(): Observable<void> {
+   onRight(): Observable<boolean> {
       return this.right$.asObservable();
    }
 
    private assignEvents() {
       fromEvent(this.document, 'keydown')
       .subscribe((event: KeyboardEvent) => {
-          this.handleKey(event.key);
+          this.handleKey(event.key, true);
       });
+      fromEvent(this.document, 'keyup')
+      .subscribe((event: KeyboardEvent) => {
+          this.handleKey(event.key, false);
+      })
    }
 
-   private handleKey(key: string): void {
+   private handleKey(key: string, value: boolean): void {
       switch (key.toLowerCase())
       {
         case 'arrowup':
         case 'w':
-          this.up$.next();
+          this.up$.next(value);
           break;
         case 'arrowdown':
         case 's':
-          this.down$.next();
+          this.down$.next(value);
           break;
         case 'arrowleft':
         case 'a':
-          this.left$.next();
+          this.left$.next(value);
           break;
         case 'arrowright':
         case 'd':
-          this.right$.next();
+          this.right$.next(value);
           break;
       }
    }
