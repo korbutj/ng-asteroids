@@ -7,8 +7,8 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import {interval, Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {interval, Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 export enum LETTER_COLOR {
   WHITE = 'white',

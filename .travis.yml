@@ -1,0 +1,26 @@
+dist: xenial
+sudo: false
+
+language: node_js
+node_js:
+  - "10"
+
+cache:
+  yarn: true
+  directories:
+    - ./node_modules
+
+install:
+  - yarn install
+
+script:
+  - yarn lint
+  - yarn build -- --prod --base-href "/ng-asteroids/"
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/ng-asteroids/
+  on:
+    branch: dev

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AnimationFrameService} from "../animation-frame.service";
-import {Subject} from "rxjs";
-import {takeUntil} from "rxjs/operators";
+import {AnimationFrameService} from '../animation-frame.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-game',
