@@ -50,13 +50,13 @@ export class GameComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        this.shipPosition = this.shipMovement.updatePosition(1);
-        this.detectorRef.detectChanges();
+        this.updateGame();
       });
 
-    this.assignEvents();
-
-
+    this.assignEventsOnUp();
+    this.assignEventsOnDown();
+    this.assignEventsOnLeft();
+    this.assignEventsOnRight();
   }
 
   ngOnDestroy(): void {
@@ -64,47 +64,53 @@ export class GameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private updateGame() {
+    this.shipPosition = this.shipMovement.updatePosition();
+    this.detectorRef.detectChanges();
+  }
 
-
-  private assignEvents()
-  {
+  private assignEventsOnUp() {
     this.keyboardHandlerService.onUp()
     .pipe(
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
       this.shipInMove = value;
-      this.shipMovement.updateSpeed(1);
+      this.shipMovement.accelerate();
       this.detectorRef.detectChanges();
     });
+  }
 
+  private assignEventsOnDown() {
     this.keyboardHandlerService.onDown()
     .pipe(
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
       this.shipInMove = false;
-      this.shipMovement.updateSpeed(-1);
+      this.shipMovement.deaccelerate();
       this.detectorRef.detectChanges();
     });
-
+  }
+  
+  private assignEventsOnLeft() {
     this.keyboardHandlerService.onLeft()
     .pipe(
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
-      this.shipInMove = value;
-      this.shipAngle = this.shipMovement.updateAngle(false);
+      this.shipAngle = this.shipMovement.rotateLeft();
       this.detectorRef.detectChanges();
     });
+  }
 
+  private assignEventsOnRight() {
     this.keyboardHandlerService.onRight()
     .pipe(
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
-      this.shipInMove = value;
-      this.shipAngle = this.shipMovement.updateAngle(true);
+      this.shipAngle = this.shipMovement.rotateRight();
       this.detectorRef.detectChanges();
     });
   }

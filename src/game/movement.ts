@@ -15,7 +15,7 @@ export class Movement {
   currentPosition: Position;
 
   private readonly angleSpeed: number = Math.PI / 50;
-  private readonly acceleration: number = 0.7;
+  private readonly acceleration: number = 0.3;
   protected speedVector: SpeedVectorComponents;
   protected speed: number;
 
@@ -24,39 +24,52 @@ export class Movement {
     this.angle = angleValue;
     this.speed = speedValue;
     this.currentPosition = startingPosition;
-    this.establishSpeedComponents();
+    this.establishSpeedVectorComponents();
   }
 
-  updateAngle(isRight: boolean): number {
-    if (isRight){
-      this.angle += this.angleSpeed;
-    }
-    else{
-      this.angle -= this.angleSpeed;
-    }
+  rotateLeft(): number {
+    this.angle -= this.angleSpeed;
     return this.angle;
   }
 
-  updateSpeed(direction: number): void{
+  rotateRight(): number {
+    this.angle += this.angleSpeed;
+    return this.angle;
+  }
+
+  updateSpeed(direction: number): void {
     this.speed += direction * this.acceleration;
     if (this.speed < 0) {
       this.speed = 0;
     }
   }
 
-  private establishSpeedComponents(): void {
+  accelerate(): void {
+    this.speed += this.acceleration;
+  }
+
+  deaccelerate(): void {
+    this.speed -= this.acceleration;
+  }
+
+  private establishSpeedVectorComponents(): void {
     this.speedVector = {
-      horizontalSpeed: (this.speed * Math.cos(this.angle - Math.PI / 2)),
-      verticalSpeed: (this.speed * Math.sin(this.angle - Math.PI / 2))
+      horizontalSpeed: (this.speed * Math.cos(this.normalizeAngle(this.angle))),
+      verticalSpeed: (this.speed * Math.sin(this.normalizeAngle(this.angle)))
     };
   }
 
-  updatePosition(deltaTime: number): Position {
-    this.establishSpeedComponents();
+  updatePosition(): Position {
+    this.establishSpeedVectorComponents();
     this.currentPosition = {
-      x: this.currentPosition.x + this.speedVector.horizontalSpeed * deltaTime,
-      y: this.currentPosition.y + this.speedVector.verticalSpeed * deltaTime
+      x: this.currentPosition.x + this.speedVector.horizontalSpeed,
+      y: this.currentPosition.y + this.speedVector.verticalSpeed
     };
     return this.currentPosition;
+  }
+
+  //Normalizes angle to fit the SVG starting rotation
+  private normalizeAngle(angle: number): number {
+    return angle - Math.PI/2;
   }
 }

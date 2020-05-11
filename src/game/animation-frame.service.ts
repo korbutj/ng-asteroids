@@ -9,7 +9,7 @@ export class AnimationFrameService {
   private readonly refresh$: Subject<void> = new Subject<void>();
 
   constructor() {
-    interval(60)
+    interval(10)
       .subscribe(() => this.refresh$.next());
   }
 
