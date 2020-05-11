@@ -92,7 +92,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.detectorRef.detectChanges();
     });
   }
-  
+
   private assignEventsOnLeft() {
     this.keyboardHandlerService.onLeft()
     .pipe(

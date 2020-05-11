@@ -68,8 +68,8 @@ export class Movement {
     return this.currentPosition;
   }
 
-  //Normalizes angle to fit the SVG starting rotation
+  // Normalizes angle to fit the SVG starting rotation
   private normalizeAngle(angle: number): number {
-    return angle - Math.PI/2;
+    return angle - Math.PI / 2;
   }
 }
