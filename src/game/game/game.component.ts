@@ -6,11 +6,13 @@ import { KeyboardHandlerService } from '../keyboard-handler.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Movement } from '../movement';
 import {Position} from '../movement';
+import {AsteroidType, AsteroidSizes} from "../asteroid/asteroid.component";
 
 @Component({
   selector: 'app-game',
   template: `
     <app-ship [shipInMove]="shipInMove" [position]="shipPosition" [angle]="shipAngle"></app-ship>
+    <app-asteroid [type]="AsteroidType.A" [size]="AsteroidSizes.LARGE"></app-asteroid>
   `,
   styles: []
 })
@@ -19,8 +21,10 @@ export class GameComponent implements OnInit, OnDestroy {
   shipPosition: Position = {x: 200, y: 300};
   shipAngle: number = 1;
 
-  private shipMovement: Movement = new Movement(0, 0);
+  AsteroidType = AsteroidType;
+  AsteroidSizes = AsteroidSizes;
 
+  private shipMovement: Movement = new Movement(0, 0);
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private animationFrameService: AnimationFrameService,
