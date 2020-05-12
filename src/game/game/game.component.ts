@@ -18,6 +18,8 @@ export class GameComponent implements OnInit, OnDestroy {
   shipInMove: boolean = false;
   shipPosition: Position = {x: 200, y: 300};
   shipAngle: number = 1;
+  isShipRotatingRight: boolean;
+  isShipRotatingLeft: boolean;
 
   private shipMovement: Movement = new Movement(0, 0, {x: 500, y: 500});
 
@@ -66,6 +68,13 @@ export class GameComponent implements OnInit, OnDestroy {
 
   private updateGame() {
     this.shipPosition = this.shipMovement.updatePosition();
+    if (this.isShipRotatingRight) {
+      this.shipAngle = this.shipMovement.rotateRight();
+    }
+    else if (this.isShipRotatingLeft) {
+      this.shipAngle = this.shipMovement.rotateLeft();
+    }
+
     this.detectorRef.detectChanges();
   }
 
@@ -99,7 +108,7 @@ export class GameComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
-      this.shipAngle = this.shipMovement.rotateLeft();
+      this.isShipRotatingLeft = value;
       this.detectorRef.detectChanges();
     });
   }
@@ -110,7 +119,7 @@ export class GameComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     )
     .subscribe((value) => {
-      this.shipAngle = this.shipMovement.rotateRight();
+      this.isShipRotatingRight = value;
       this.detectorRef.detectChanges();
     });
   }
