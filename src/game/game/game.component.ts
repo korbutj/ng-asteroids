@@ -18,8 +18,10 @@ export class GameComponent implements OnInit, OnDestroy {
   shipInMove: boolean = false;
   shipPosition: Position = {x: 200, y: 300};
   shipAngle: number = 1;
+  isShipRotatingRight: boolean;
+  isShipRotatingLeft: boolean;
 
-  private shipMovement: Movement = new Movement(0, 0);
+  private shipMovement: Movement = new Movement(0, 0, {x: 500, y: 500});
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -38,6 +40,9 @@ export class GameComponent implements OnInit, OnDestroy {
         detectorRef.markForCheck();
         applicationRef.tick();
       });
+
+      this.shipPosition = this.shipMovement.currentPosition;
+      this.shipAngle = this.shipMovement.angle;
   }
 
   ngOnInit(): void {
@@ -47,17 +52,13 @@ export class GameComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(() => {
-        // Refresh
+        this.updateGame();
       });
 
-    this.keyboardHandlerService.onUp()
-      .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((value) => {
-        this.shipInMove = value;
-        this.detectorRef.detectChanges();
-      });
+    this.assignEventsOnUp();
+    this.assignEventsOnDown();
+    this.assignEventsOnLeft();
+    this.assignEventsOnRight();
   }
 
   ngOnDestroy(): void {
@@ -65,10 +66,61 @@ export class GameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  private updateGame() {
+    this.shipPosition = this.shipMovement.updatePosition();
+    if (this.isShipRotatingRight) {
+      this.shipAngle = this.shipMovement.rotateRight();
+    }
+    else if (this.isShipRotatingLeft) {
+      this.shipAngle = this.shipMovement.rotateLeft();
+    }
 
+    this.detectorRef.detectChanges();
+  }
 
-  private assignEvents()
-  {
+  private assignEventsOnUp() {
+    this.keyboardHandlerService.onUp()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((value) => {
+      this.shipInMove = value;
+      this.shipMovement.accelerate();
+      this.detectorRef.detectChanges();
+    });
+  }
 
+  private assignEventsOnDown() {
+    this.keyboardHandlerService.onDown()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((value) => {
+      this.shipInMove = false;
+      this.shipMovement.deaccelerate();
+      this.detectorRef.detectChanges();
+    });
+  }
+
+  private assignEventsOnLeft() {
+    this.keyboardHandlerService.onLeft()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((value) => {
+      this.isShipRotatingLeft = value;
+      this.detectorRef.detectChanges();
+    });
+  }
+
+  private assignEventsOnRight() {
+    this.keyboardHandlerService.onRight()
+    .pipe(
+      takeUntil(this.destroy$)
+    )
+    .subscribe((value) => {
+      this.isShipRotatingRight = value;
+      this.detectorRef.detectChanges();
+    });
   }
 }
