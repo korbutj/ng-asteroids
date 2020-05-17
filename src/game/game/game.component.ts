@@ -6,7 +6,7 @@ import { KeyboardHandlerService } from '../keyboard-handler.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { Movement } from '../movement';
 import {Position} from '../movement';
-import {AsteroidType, AsteroidSizes} from "../asteroid/asteroid.component";
+import {AsteroidType, AsteroidSizes} from '../asteroid/asteroid.component';
 
 @Component({
   selector: 'app-game',

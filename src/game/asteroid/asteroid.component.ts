@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnChanges, OnInit, Renderer2, SimpleChanges} from '@angular/core';
-import {Position} from "../movement";
+import {Position} from '../movement';
 
 export enum AsteroidType {
   A = 0,
